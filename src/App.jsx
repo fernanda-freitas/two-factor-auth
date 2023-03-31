@@ -1,41 +1,32 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import emailjs from '@emailjs/browser';
 import { Button, Form, Input, Space } from 'antd';
 
 function App() {
-  const onFinish = () => {
-    console.log("Submited")
+  console.log(process.env.REACT_APP_SERVICE_ID)
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, form.current, process.env.REACT_APP_PUBLIC_KEY)
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
   }
 
-  const onFinishFailed = () => {
-    console.log("Failed submition")
-  }
+  const form = useRef();
 
   return (
-    <Form
-      name="basic"
-      style={{ maxWidth: 400 }}
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-      layout="vertical"
-      size="large"
-    >
-
-      <Form.Item
-        label="Email"
-        name="email"
-        rules={[{ required: true, message: 'Please input your email!' }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item>
-        <Button type="primary" size="large" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+    <form ref={form} onSubmit={sendEmail}>
+      <label>Name</label>
+      <input type="text" name="user_name" />
+      <label>Email</label>
+      <input type="email" name="user_email" />
+      <label>Message</label>
+      <textarea name="message" />
+      <input type="submit" value="Send" />
+    </form>
   );
 }
 
