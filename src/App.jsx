@@ -3,18 +3,17 @@ import emailjs from '@emailjs/browser';
 
 function App() {
   const [email, setEmail] = useState('')
-  const [code, setCode] = useState('')
   
   const sendEmail = (e) => {
     e.preventDefault();
-    setCode(Math.floor(Math.random() * 900000) + 100000)
-    console.log(code)
 
+    console.log(email)
+    const templateParams = {
+      email_to: email,
+      generated_code: Math.floor(Math.random() * 900000) + 100000
+    }
 
-    emailjs.sendForm(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, {
-      email: {email},
-      code: {code}
-    }, process.env.REACT_APP_PUBLIC_KEY)
+    emailjs.send(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, templateParams, process.env.REACT_APP_PUBLIC_KEY)
       .then((result) => {
           console.log(result.text);
       }, (error) => {
@@ -32,7 +31,7 @@ function App() {
           <div className="mb-3">
           
             <label htmlFor="email" className="form-label">Email</label>
-            <input onChange={(e) => setEmail(e.target.value)} className="form-control" />
+            <input name="email" onChange={(e) => setEmail(e.target.value)} className="form-control" />
             <div className="form-text">We'll never share your email with anyone else.</div>
           
           </div>
