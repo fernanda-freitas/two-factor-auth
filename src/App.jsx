@@ -1,9 +1,8 @@
 import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
-import { Button, Form, Input, Space } from 'antd';
 
 function App() {
-  console.log(process.env.REACT_APP_SERVICE_ID)
+  
   const sendEmail = (e) => {
     e.preventDefault();
 
@@ -18,15 +17,19 @@ function App() {
   const form = useRef();
 
   return (
-    <form ref={form} onSubmit={sendEmail}>
-      <label>Name</label>
-      <input type="text" name="user_name" />
-      <label>Email</label>
-      <input type="email" name="user_email" />
-      <label>Message</label>
-      <textarea name="message" />
-      <input type="submit" value="Send" />
-    </form>
+    <div className='grid'>
+      <div className="row">
+        <form ref={form} onSubmit={sendEmail} className='col-12 col-md-4 mx-auto mt-5 px-5'>
+          <h3 className='mb-4'>Two-factor authentication</h3>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
   );
 }
 
