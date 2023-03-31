@@ -11,13 +11,14 @@ function App() {
       email_to: email,
       generated_code: Math.floor(Math.random() * 900000) + 100000
     }
+    
 
     emailjs.send(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, templateParams, process.env.REACT_APP_PUBLIC_KEY)
       .then((result) => {
           console.log(result.text);
       }, (error) => {
           console.log(error.text);
-      });
+      }); 
   }
 
   const form = useRef();
