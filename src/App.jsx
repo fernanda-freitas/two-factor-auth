@@ -7,7 +7,6 @@ function App() {
   const sendEmail = (e) => {
     e.preventDefault();
 
-    console.log(email)
     const templateParams = {
       email_to: email,
       generated_code: Math.floor(Math.random() * 900000) + 100000
