@@ -1,10 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 
 function App() {
+  // const [email, setEmail] = useState('')
+  // const [code, setCode] = useState('')
   
   const sendEmail = (e) => {
     e.preventDefault();
+
+    // const setCode = Math.floor(Math.random() * 900000) + 100000;
 
     emailjs.sendForm(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, form.current, process.env.REACT_APP_PUBLIC_KEY)
       .then((result) => {
@@ -23,8 +27,8 @@ function App() {
           <h3 className='mb-4'>Two-factor authentication</h3>
           <div className="mb-3">
             <label htmlFor="email" className="form-label">Email address</label>
-            <input name="user_email" type="email" className="form-control" id="email" aria-describedby="emailHelp" />
-            <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+            <input name="user_email" type="email" className="form-control" />
+            <div className="form-text">We'll never share your email with anyone else.</div>
           </div>
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>
