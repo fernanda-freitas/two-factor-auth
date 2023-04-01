@@ -16,15 +16,17 @@ function App() {
     
     emailjs.send(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, templateParams, process.env.REACT_APP_PUBLIC_KEY)
       .then((result) => {
-        setStatus(result.text)
+        setStatus(true)
+        console.log(result)
       }, (error) => {
-        setStatus(error.text);
+        setStatus(true);
+        console.log(error)
       }); 
   }
 
   return (
     <div className='grid'>
-      {status === 'OK' ? (
+      {status.status === 412 ? (
         <div className="alert alert-success" role="alert">
           O código foi enviado corretamente.
         </div>
