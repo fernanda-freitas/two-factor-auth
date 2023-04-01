@@ -2,8 +2,11 @@ import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 
 function App() {
+  const form = useRef();
   const [email, setEmail] = useState('')
-  
+  const [emailSentResult, setEmailSentResult] = useState(null)
+  const [emailSentError, setEmailSentError] = useState(null)
+
   const sendEmail = (e) => {
     e.preventDefault();
 
@@ -14,16 +17,24 @@ function App() {
     
     emailjs.send(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, templateParams, process.env.REACT_APP_PUBLIC_KEY)
       .then((result) => {
-          console.log(result.text);
+          setEmailSentResult(result.text)
       }, (error) => {
-          console.log(error.text);
+        setEmailSentError(error.text);
       }); 
   }
 
-  const form = useRef();
-
   return (
     <div className='grid'>
+      {emailSentResult && (
+        <div className="alert alert-success" role="alert">
+          {emailSentResult}
+        </div>
+      )}
+      {emailSentError && (
+        <div className="alert alert-danger" role="alert">
+          {emailSentError}
+        </div>
+      )}
       <div className="row">
         <form ref={form} onSubmit={sendEmail} className='col-12 col-md-4 mx-auto mt-5 px-5'>
           <h3 className='mb-4'>Two-factor authentication</h3>
