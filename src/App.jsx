@@ -10,7 +10,6 @@ function App() {
   
   const sendEmail = (e) => {
     e.preventDefault();
-    
     const templateParams = {
       email_to: email,
       generated_code: Math.floor(Math.random() * 900000) + 100000
@@ -19,13 +18,12 @@ function App() {
     emailjs.send(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, templateParams, process.env.REACT_APP_PUBLIC_KEY)
       .then((result) => {
         setStatus(true)
-        console.log(result)
+        setIsFormSent(true)
       }, (error) => {
         setStatus(true);
-        console.log(error)
+        setIsFormSent(false)
       }); 
-
-      setIsFormSent(true)
+      
   }
 
   // const validateCode = () => {
