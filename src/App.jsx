@@ -21,25 +21,25 @@ function App() {
     }); 
   }
   
-  function handleChange(event, index) {
+  function handleChange(e, index) {
     const newCode = [...code];
-    newCode[index] = event.target.value;
+    newCode[index] = e.target.value;
     setCode(newCode);
   }
 
-  function handlePaste(event) {
-    const text = event.clipboardData.getData('text');
+  function handlePaste(e) {
+    const text = e.clipboardData.getData('text');
     const characters = text.split('').filter((_, index) => index < 6);
     const newCode = [...code];
     characters.forEach((char, index) => {
       newCode[index] = char;
     });
     setCode(newCode);
-    event.preventDefault();
+    e.preventDefault();
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  function handleSubmit(e) {
+    e.preventDefault();
     const enteredCode = code.join('');
     // Add code validation logic here
     alert(`Entered code: ${enteredCode}`);
@@ -50,10 +50,10 @@ function App() {
       <div className="row">
         <div className='col-12 col-md-4 mx-auto mt-5 px-5'>
           <div className="alert alert-success" role="alert">
-            O código foi enviado corretamente.
+            O código foi enviado.
           </div>
           <div className="alert alert-danger" role="alert">
-            Algo deu errado.
+            Algo deu errado, reveja o email inserido.
           </div>
           {!isFormSent ? (
             <form ref={form} onSubmit={sendEmail}>
@@ -67,13 +67,14 @@ function App() {
             </form>
           ) : (
             <form onSubmit={handleSubmit}>
-              <div className='row mx-0 mb-3'>
-                <input type="text" value={code[0]} maxLength={1} onChange={event => handleChange(event, 0)} onPaste={handlePaste} required className="form-control col"/>
-                <input type="text" value={code[1]} maxLength={1} onChange={event => handleChange(event, 1)} required className="form-control col"/>
-                <input type="text" value={code[2]} maxLength={1} onChange={event => handleChange(event, 2)} required className="form-control col"/>
-                <input type="text" value={code[3]} maxLength={1} onChange={event => handleChange(event, 3)} required className="form-control col"/>
-                <input type="text" value={code[4]} maxLength={1} onChange={event => handleChange(event, 4)} required className="form-control col"/>
-                <input type="text" value={code[5]} maxLength={1} onChange={event => handleChange(event, 5)} required className="form-control col"/>
+              <h3 className='mb-4'>Two-factor authentication</h3>
+              <div className='row mb-3'>
+                <input type="text" value={code[0]} maxLength={1} onChange={e => handleChange(e, 0)} onPaste={handlePaste} required className="form-control col form-control col mx-2"/>
+                <input type="text" value={code[1]} maxLength={1} onChange={e => handleChange(e, 1)} required className="form-control col form-control col mx-2"/>
+                <input type="text" value={code[2]} maxLength={1} onChange={e => handleChange(e, 2)} required className="form-control col form-control col mx-2"/>
+                <input type="text" value={code[3]} maxLength={1} onChange={e => handleChange(e, 3)} required className="form-control col form-control col mx-2"/>
+                <input type="text" value={code[4]} maxLength={1} onChange={e => handleChange(e, 4)} required className="form-control col form-control col mx-2"/>
+                <input type="text" value={code[5]} maxLength={1} onChange={e => handleChange(e, 5)} required className="form-control col form-control col mx-2"/>
               </div>
               <button type="submit" className="btn btn-primary">Submit</button>
             </form>
