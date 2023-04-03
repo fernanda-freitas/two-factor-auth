@@ -9,7 +9,7 @@ export default function Alert({ type }) {
             </div>
         ) : (
             <div className="alert alert-danger" role="alert">
-                Algo deu errado. Reveja o email inserido.
+                Algo deu errado. Verifique o email inserido.
             </div>
         )}
         </>

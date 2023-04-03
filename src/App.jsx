@@ -7,7 +7,7 @@ function App() {
   const [userEmail, setUserEmail] = useState('')
   const [isFormSent, setIsFormSent] = useState(false)
   const [code, setCode] = useState(['', '', '', '', '', ''])
-  const [result, setResult] = useState({message:'', type:''})
+  const [result, setResult] = useState(null)
   
   const sendEmail = (e) => {
     e.preventDefault();
@@ -55,8 +55,8 @@ function App() {
     <div className='grid'>
       <div className="row">
         <div className='col-12 col-md-4 mx-auto mt-5 px-5'>
-          {result && <Alert message={result.message} type={result.type}/>}
-          {!isFormSent ? (
+          {result && <Alert type={result.type}/>}
+          {!result ? (
             <form ref={form} onSubmit={sendEmail}>
               <h3 className='mb-4'>Two-factor authentication</h3>
               <div className="mb-3">
