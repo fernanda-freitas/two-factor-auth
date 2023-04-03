@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
+import Alert from './Alert'
 
 function App() {
   const form = useRef();
@@ -49,12 +50,7 @@ function App() {
     <div className='grid'>
       <div className="row">
         <div className='col-12 col-md-4 mx-auto mt-5 px-5'>
-          <div className="alert alert-success" role="alert">
-            O código foi enviado.
-          </div>
-          <div className="alert alert-danger" role="alert">
-            Algo deu errado, reveja o email inserido.
-          </div>
+          {isFormSent && <Alert message="Mensagem vem aqui" />}
           {!isFormSent ? (
             <form ref={form} onSubmit={sendEmail}>
               <h3 className='mb-4'>Two-factor authentication</h3>
