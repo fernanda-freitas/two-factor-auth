@@ -18,12 +18,12 @@ function App() {
     emailjs.send(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, templateParams, process.env.REACT_APP_PUBLIC_KEY)
     .then((result) => {
       setIsFormSent(true)
-      setResult({message: result.text, type: result.status})
+      setResult({type: result.status})
       console.log(result)
     }, (error) => {
       console.log(error)
       setIsFormSent(false)
-      setResult({message: error.text, type: error.status})
+      setResult({type: error.status})
     }); 
   }
   
@@ -55,7 +55,7 @@ function App() {
     <div className='grid'>
       <div className="row">
         <div className='col-12 col-md-4 mx-auto mt-5 px-5'>
-          {isFormSent && <Alert message={result.message} type={result.type}/>}
+          {result && <Alert message={result.message} type={result.type}/>}
           {!isFormSent ? (
             <form ref={form} onSubmit={sendEmail}>
               <h3 className='mb-4'>Two-factor authentication</h3>
