@@ -7,6 +7,7 @@ function App() {
   const [userEmail, setUserEmail] = useState('')
   const [isFormSent, setIsFormSent] = useState(false)
   const [code, setCode] = useState(['', '', '', '', '', ''])
+  const [result, setResult] = useState({message:'', type:''})
   
   const sendEmail = (e) => {
     e.preventDefault();
@@ -17,8 +18,10 @@ function App() {
     emailjs.send(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, templateParams, process.env.REACT_APP_PUBLIC_KEY)
     .then((result) => {
       setIsFormSent(true)
+      setResult({message: result.text, type: result.status})
     }, (error) => {
       setIsFormSent(false)
+      setResult({message: error.text, type: error.status})
     }); 
   }
   
@@ -50,7 +53,7 @@ function App() {
     <div className='grid'>
       <div className="row">
         <div className='col-12 col-md-4 mx-auto mt-5 px-5'>
-          {isFormSent && <Alert message="Mensagem vem aqui" />}
+          {isFormSent && <Alert message={result.message} type={result.type}/>}
           {!isFormSent ? (
             <form ref={form} onSubmit={sendEmail}>
               <h3 className='mb-4'>Two-factor authentication</h3>
