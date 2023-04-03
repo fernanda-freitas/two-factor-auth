@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import Alert from './Alert'
 
@@ -7,6 +7,15 @@ function App() {
   const [userEmail, setUserEmail] = useState('')
   const [code, setCode] = useState(['', '', '', '', '', ''])
   const [result, setResult] = useState(null)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    setIsVisible(true)
+    const timer = setTimeout(() => {
+      setIsVisible(false)
+    }, 3000)
+    return () => clearTimeout(timer);
+  }, result)
   
   const sendEmail = (e) => {
     e.preventDefault();
