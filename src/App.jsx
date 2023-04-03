@@ -9,14 +9,6 @@ function App() {
   const [result, setResult] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
 
-  useEffect(() => {
-    setIsVisible(true)
-    const timer = setTimeout(() => {
-      setIsVisible(false)
-    }, 3000)
-    return () => clearTimeout(timer);
-  }, result)
-  
   const sendEmail = (e) => {
     e.preventDefault();
     const templateParams = {
@@ -30,6 +22,15 @@ function App() {
       setResult({type: error.status})
     }); 
   }
+
+  useEffect(() => {
+    setIsVisible(true)
+    const timer = setTimeout(() => {
+      setIsVisible(false)
+    }, 3000)
+    return () => clearTimeout(timer);
+  }, [result])
+  
   
   function handleChange(e, index) {
     const newCode = [...code];
@@ -59,7 +60,7 @@ function App() {
     <div className='grid'>
       <div className="row">
         <div className='col-12 col-md-4 mx-auto mt-5 px-5'>
-          {result && <Alert type={result.type}/>}
+          {isVisible && <Alert type={result.type}/>}
           {result && result.type == 200 ? (
             <form onSubmit={handleSubmit}>
             <h3 className='mb-4'>Two-factor authentication</h3>
