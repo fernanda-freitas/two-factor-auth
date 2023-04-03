@@ -19,7 +19,9 @@ function App() {
     .then((result) => {
       setIsFormSent(true)
       setResult({message: result.text, type: result.status})
+      console.log(result)
     }, (error) => {
+      console.log(error)
       setIsFormSent(false)
       setResult({message: error.text, type: error.status})
     }); 
