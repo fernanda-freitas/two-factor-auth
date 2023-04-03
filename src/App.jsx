@@ -5,7 +5,6 @@ import Alert from './Alert'
 function App() {
   const form = useRef();
   const [userEmail, setUserEmail] = useState('')
-  const [isFormSent, setIsFormSent] = useState(false)
   const [code, setCode] = useState(['', '', '', '', '', ''])
   const [result, setResult] = useState(null)
   
@@ -17,12 +16,8 @@ function App() {
     }
     emailjs.send(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, templateParams, process.env.REACT_APP_PUBLIC_KEY)
     .then((result) => {
-      setIsFormSent(true)
       setResult({type: result.status})
-      console.log(result)
     }, (error) => {
-      console.log(error)
-      setIsFormSent(false)
       setResult({type: error.status})
     }); 
   }
