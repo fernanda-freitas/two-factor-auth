@@ -60,8 +60,8 @@ function App() {
     <div className='grid'>
       <div className="row">
         <div className='col-12 col-md-4 mx-auto mt-5 px-5'>
-          {isVisible && <Alert type={result.type}/>}
-          {result && result.type == 200 ? (
+          {result && isVisible && <Alert type={result.type}/>}
+          {result && result.type === 200 ? (
             <form onSubmit={handleSubmit}>
             <h3 className='mb-4'>Two-factor authentication</h3>
             <div className='row mb-3'>
