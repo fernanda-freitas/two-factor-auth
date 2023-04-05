@@ -1,5 +1,4 @@
 import React from 'react';
-// import Loader from './images/loader.svg'
 import Loader from './images/connection.gif'
 
 export default function Loading() {
