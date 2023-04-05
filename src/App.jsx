@@ -11,9 +11,11 @@ function App() {
   const [isVisible, setIsVisible] = useState(false)
   const [generatedCode, setGeneratedCode] = useState('')
   const [showChick, setShowChick] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const sendEmail = (e) => {
     e.preventDefault();
+    setIsLoading(true)
     const templateParams = {
       email_to: userEmail,
       generated_code: Math.floor(Math.random() * 900000) + 100000
@@ -21,8 +23,10 @@ function App() {
     emailjs.send(process.env.REACT_APP_SERVICE_ID, process.env.REACT_APP_TEMPLATE_ID, templateParams, process.env.REACT_APP_PUBLIC_KEY)
     .then((result) => {
       setResult({type: result.status})
+      setIsLoading(false)
     }, (error) => {
       setResult({type: error.status})
+      setIsLoading(false)
     }); 
 
     setGeneratedCode(templateParams.generated_code)
@@ -44,6 +48,7 @@ function App() {
   }
 
   function handlePaste(e) {
+    e.preventDefault();
     const text = e.clipboardData.getData('text');
     const characters = text.split('').filter((_, index) => index < 6);
     const newCode = [...code];
@@ -51,18 +56,19 @@ function App() {
       newCode[index] = char;
     });
     setCode(newCode);
-    e.preventDefault();
   }
 
   function handleSubmit(e) {
     e.preventDefault();
+    setIsLoading(true)
     const enteredCode = Number(code.join(''));
     if (generatedCode === enteredCode) {
-      console.log('code matches')
       setShowChick(true)
       setResult(null)
+      setIsLoading(false)
     } else {
-      console.log('wrong code')
+      setIsLoading(false)
+      setResult(null)
     }
   }
 
@@ -70,9 +76,16 @@ function App() {
     <div className='grid'>
       <div className="row">
         <div className='col-12 col-md-4 mx-auto mt-5 px-5'>
+          {isLoading && (
+            <p className='placeholder-glow'>
+              <span className="placeholder bg-secondary col-6"></span>
+              <span className="placeholder bg-secondary w-75"></span>
+              <span className="placeholder bg-secondary" style={{width: '25%'}}></span>
+            </p>
+          )}
           {result && isVisible && <Alert type={result.type}/>}
           {(() => {
-            if (result && result.type === 200) {
+            if (!isLoading && result && result.type === 200) {
               return (
                 <form onSubmit={handleSubmit}>
                   <h3 className='mb-4'>Two-factor authentication</h3>
@@ -88,7 +101,7 @@ function App() {
                 </form>)
             } else if (showChick) {
               return <img src={Chick} alt="Chick image after a happy authentication." />
-            } else {
+            } else if (!isLoading) {
               return (
                 <form ref={form} onSubmit={sendEmail}>
                   <h3 className='mb-4'>Two-factor authentication</h3>
