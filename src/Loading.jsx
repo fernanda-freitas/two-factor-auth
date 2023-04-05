@@ -1,11 +1,11 @@
 import React from 'react';
+// import Loader from './images/loader.svg'
+import Loader from './images/connection.gif'
 
 export default function Loading() {
     return (
-        <p className='placeholder-glow'>
-            <span className="placeholder bg-secondary col-6"></span>
-            <span className="placeholder bg-secondary w-75"></span>
-            <span className="placeholder bg-secondary" style={{width: '25%'}}></span>
-        </p>
+        <div className='d-flex mt-5'>
+            <img src={Loader} className='mx-auto w-25' alt="loader spinner" />
+        </div>
     )
 }

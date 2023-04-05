@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import Alert from './Alert'
 import Loading from './Loading'
-import Chick from './images/chicken.png'
+import LoggedImage from './images/user.gif'
 
 function App() {
   const form = useRef();
@@ -11,7 +11,7 @@ function App() {
   const [result, setResult] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
   const [generatedCode, setGeneratedCode] = useState('')
-  const [showChick, setShowChick] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const sendEmail = (e) => {
@@ -64,7 +64,7 @@ function App() {
     setIsLoading(true)
     const enteredCode = Number(code.join(''));
     if (generatedCode === enteredCode) {
-      setShowChick(true)
+      setIsLoggedIn(true)
       setResult(null)
       setIsLoading(false)
     } else {
@@ -94,8 +94,13 @@ function App() {
                   </div>
                   <button type="submit" className="btn btn-primary">Submit</button>
                 </form>)
-            } else if (showChick) {
-              return <img src={Chick} alt="Chick image after a happy authentication." />
+            } else if (isLoggedIn) {
+              return (
+                <div className='d-flex flex-column'>
+                  <img src={LoggedImage} className='w-25 mx-auto' alt="Image after a happy authentication." />
+                  <h5 className='mx-auto mt-4'>You're logged in.</h5>
+                </div>
+                )
             } else if (!isLoading) {
               return (
                 <form ref={form} onSubmit={sendEmail}>
