@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import Alert from './Alert'
+import Loading from './Loading'
 import Chick from './images/chicken.png'
 
 function App() {
@@ -76,13 +77,7 @@ function App() {
     <div className='grid'>
       <div className="row">
         <div className='col-12 col-md-4 mx-auto mt-5 px-5'>
-          {isLoading && (
-            <p className='placeholder-glow'>
-              <span className="placeholder bg-secondary col-6"></span>
-              <span className="placeholder bg-secondary w-75"></span>
-              <span className="placeholder bg-secondary" style={{width: '25%'}}></span>
-            </p>
-          )}
+          { isLoading && <Loading /> }
           {result && isVisible && <Alert type={result.type}/>}
           {(() => {
             if (!isLoading && result && result.type === 200) {
